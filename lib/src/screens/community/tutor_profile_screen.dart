@@ -1,0 +1,193 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../services/profile_service.dart';
+
+import '../../models/app_user.dart';
+import '../../models/user_role.dart';
+import '../../services/chat_service.dart';
+import '../chat/chat_screen.dart';
+
+class TutorProfileScreen extends StatelessWidget {
+  final AppUser user;
+
+  const TutorProfileScreen({
+    super.key,
+    required this.user,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFF3F6FB),
+      appBar: AppBar(
+        title: const Text(
+          'Tutor Profile',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 12),
+            CircleAvatar(
+              radius: 40,
+              backgroundColor: Colors.blueAccent,
+              child: Text(
+                user.fullName.isNotEmpty
+                    ? user.fullName[0].toUpperCase()
+                    : 'U',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              user.fullName,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              userRoleToString(user.role).toUpperCase(),
+              style: const TextStyle(
+                fontSize: 13,
+                color: Colors.grey,
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // Bio
+            if (user.bio.isNotEmpty) ...[
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Bio',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[800],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  user.bio,
+                  style: const TextStyle(
+                    fontSize: 13,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+            ],
+
+            // Skills & Subjects
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Skills & Subjects',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[800],
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  ...user.skills.map(
+                    (s) => Chip(
+                      label: Text(s),
+                      backgroundColor: const Color(0xFFE3F2FD),
+                    ),
+                  ),
+                  ...user.subjects.map(
+                    (s) => Chip(
+                      label: Text(s),
+                      backgroundColor: const Color(0xFFE8F5E9),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Spacer(),
+
+            // Contact Tutor button
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton.icon(
+                icon: const Icon(Icons.chat_bubble_outline),
+                label: const Text(
+                  'Contact Tutor',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF2563EB),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                ),
+                onPressed: () async {
+  final chatService =
+      Provider.of<ChatService>(context, listen: false);
+
+  // نجيب اسم المستخدم الحالي من البروفايل
+  final profileService =
+      Provider.of<ProfileService>(context, listen: false);
+  final me = await profileService.getCurrentUserProfile();
+
+  final currentUserName =
+      (me != null && me.fullName.isNotEmpty) ? me.fullName : 'You';
+
+  try {
+    final conv = await chatService.startOrGetConversation(
+      otherUserId: user.id,
+      currentUserName: currentUserName,
+      otherUserName: user.fullName,
+    );
+
+    if (!context.mounted) return;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => ChatScreen(
+          conversationId: conv.id,
+          otherUserName: user.fullName,
+        ),
+      ),
+    );
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Failed to open chat: $e'),
+      ),
+    );
+  }
+},
+
+              ),
+            ),
+            const SizedBox(height: 16),
+          ],
+        ),
+      ),
+    );
+  }
+}
