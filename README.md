@@ -1,259 +1,222 @@
-📱 IU Community App
+# 📱 IU Community App
 
-A mobile Flutter application designed for students and tutors at the Islamic University of Madinah.
-Built with Flutter + Dart + Supabase, the app focuses on community learning, private tutoring, study collaboration, and communication.
+A mobile Flutter application designed for students and tutors at the Islamic University of Madinah.  
+Built with **Flutter + Dart + Supabase**, the app focuses on community learning, private tutoring, study collaboration, and real-time communication.
 
-🚀 Features Implemented (Fully Working)
-✅ Authentication System
+---
 
-Email/Password sign-up & sign-in.
+## 🚀 Features Implemented (Fully Working)
 
-Start screen + Login screen + Register screen.
+### ✅ Authentication System
+- Email/Password sign-up & sign-in  
+- Start screen, Login screen, Register screen  
+- Secure Supabase authentication  
+- Role selection during registration: **Student**, **Tutor**, or **Both**
 
-Secure Supabase authentication.
+---
 
-Role selection during registration:
-Student, Tutor, or Both.
+## 👤 User Profile
+- Automatic profile creation for every new user  
+- Editable fields: **bio, skills, subjects, LinkedIn URL**  
+- View your own profile  
+- View other users’ profiles (especially tutors)  
+- Clearly displays user role: **STUDENT / TUTOR / BOTH**  
+- Profile displays:
+  - Full name  
+  - Role  
+  - Bio  
+  - Skills & subjects  
+  - Social links  
 
-👤 User Profile
+---
 
-Each new user automatically gets a profile record in Supabase.
-
-Editable profile (bio, skills, subjects, LinkedIn URL).
-
-View your profile with a clean UI.
-
-View other users’ profiles (especially tutors).
-
-Display user role clearly: STUDENT / TUTOR / BOTH.
-
-Display:
-
-Full name
-
-Role
-
-Bio
-
-Skills & subjects
-
-Social links (LinkedIn)
-
-🔎 Search & Community
-
+## 🔎 Search & Community
 Search for tutors by:
+- Name  
+- Skill  
+- Subject  
 
-Name
+UI features:
+- Clean tutor cards  
+- Tap to view full tutor profile  
+- **Contact Tutor** → opens chat instantly  
 
-Skill
+---
 
-Subject
+## 💬 Real-Time Chat System
+Built using **Supabase Realtime** + **Postgres triggers**
 
-Clean UI with tutor cards.
+### Chat Features
+- One-to-one messaging  
+- Real-time incoming messages  
+- Conversation list showing:
+  - Other user’s name  
+  - Last message  
+  - Last updated time  
+- Beautiful chat UI:
+  - Colored bubbles  
+  - Timestamps  
+  - Auto-scroll  
+  - Gradient header  
 
-Tap a tutor to view full profile.
+### Database Structure
 
-“Contact Tutor” button opens chat instantly.
+#### `conversations` table
+- user1_id / user2_id  
+- user1_name / user2_name  
+- member_ids (UUID[])  
+- last_message  
+- updated_at  
 
-💬 Real-Time Chat System
+#### `messages` table
+- conversation_id  
+- sender_id  
+- text  
+- created_at  
 
-Implemented using Supabase Realtime and Postgres triggers.
+_All fully integrated with the app UI._
 
-Chat Features:
+---
 
-One-to-one messaging.
-
-Real-time streaming of messages.
-
-Conversation list showing:
-
-The other user’s name
-
-Last message
-
-Last updated time
-
-Beautiful chat UI with:
-
-Colored message bubbles
-
-Timestamps
-
-Auto-scroll
-
-Gradient header
-
-Database structure:
-
-conversations table with:
-
-user1_id / user2_id
-
-user1_name / user2_name
-
-member_ids (UUID[])
-
-last_message
-
-updated_at
-
-messages table with:
-
-conversation_id
-
-sender_id
-
-text
-
-created_at
-
-All fully integrated with the app’s UI.
-
-🗂️ Home Screen
-
-Gradient header with:
-
-User name
-
-Today’s date
-
-Welcome message
+## 🗂️ Home Screen
+Gradient header showing:
+- User name  
+- Today’s date  
+- Personalized welcome message  
 
 Quick action cards:
+- Schedule  
+- Profile  
+- Community  
+- Messages  
 
-Schedule
+Smooth navigation using bottom tabs.
 
-Profile
+---
 
-Community
+## 📅 Schedule System (Basic Version)
+- User can open schedule screen  
+- (Advanced scheduling is planned — see Next Features)
 
-Messages
+---
 
-Smooth navigation between screens via bottom tabs.
+## 🛠️ Tech Stack
 
-📅 Schedule System (Basic Version)
+| Area        | Technology |
+|-------------|------------|
+| Frontend    | Flutter + Dart |
+| Backend     | Supabase (PostgreSQL + Realtime) |
+| Auth        | Supabase Auth |
+| Database    | Supabase Table Editor |
+| State Mgmt  | Provider |
+| UI          | Custom Material UI components |
 
-User can open schedule screen.
-(Advanced scheduling is planned in the Next Features section)
+---
 
-🛠️ Tech Stack
-Area	Technology
-Frontend	Flutter + Dart
-Backend	Supabase (PostgreSQL + Realtime)
-Auth	Supabase Auth
-Database	Supabase Table Editor
-State Management	Provider
-UI	Custom Material UI components
-🧩 App Architecture
+## 🧩 App Architecture
 
-Services Layer
+### Services Layer
+- AuthService  
+- ProfileService  
+- ChatService  
 
-AuthService
+### Models
+- AppUser  
+- Conversation  
+- ChatMessage  
+- UserRole (enum)
 
-ProfileService
-
-ChatService
-
-Models
-
-AppUser
-
-Conversation
-
-ChatMessage
-
-UserRole (enum)
-
-Screens
-
-Authentication (Start, Login, Signup)
-
-Home
-
-Profile (view + edit)
-
-Community (search tutors)
-
-Tutor Profile
-
-Chat & Conversations
-
-Schedule
+### Screens
+- Authentication (Start, Login, Signup)  
+- Home  
+- Profile (view + edit)  
+- Community (search tutors)  
+- Tutor Profile  
+- Chat & Conversations  
+- Schedule  
 
 Clean folder structure and modular design for easy expansion.
 
-🔮 Future Enhancements (Planned Features)
-🟦 1. Advanced Schedule System
+---
+## 📸 App Screenshots
 
-Add tasks, deadlines, reminders.
+### 🏠 Home & Onboarding
+| Home | Onboarding |
+|------|------------|
+| ![5848336987511786398_121](https://github.com/user-attachments/assets/5f3fabfc-1dc3-4f6d-a888-f05b737c43ce) | ![5848336987511786397_121](https://github.com/user-attachments/assets/4e21f7f9-1901-44be-bc8b-66193febe493)|
+--- 
+### 📝 Create Account & Login
+| Create Account | Login |
+|----------------|-------|
+| ![5848336987511786394_121](https://github.com/user-attachments/assets/6e2173a0-a7f9-4063-a6ea-49bd3601cfdf)| ![5848336987511786395_121](https://github.com/user-attachments/assets/ba467e3c-0d9f-4d0b-aa46-110c78162f0a)|
 
-Calendar view.
 
-Push notifications.
+---
 
-🟪 2. Group Study Feature
+### 👤 Profile & Tutor Feed
+| Profile | Tutor Feed |
+|--------|------------|
+| ![5848336987511786389_121](https://github.com/user-attachments/assets/daa526d3-11c6-4332-8ceb-31e76eccd1be)| ![5848336987511786396_121](https://github.com/user-attachments/assets/aa3a5477-e703-4c39-b45d-6ed05282fc65)|
 
-Create groups.
+---
 
-Group chat.
+### 💬 Chat & Messages
+| Chat Screen | Conversations List |
+|-------------|--------------------|
+|![5848336987511786390_121](https://github.com/user-attachments/assets/09e57b2f-4726-47d6-88df-6d2be5d403f9) | ![5848336987511786393_121](https://github.com/user-attachments/assets/c0261e4e-661a-4928-bfb1-ea684a69bf29)|
 
-Group tasks.
+---
 
-Shared files.
+### 📅 Schedule System
+| Schedule |
+|----------|
+|![5848336987511786392_121](https://github.com/user-attachments/assets/bdaa503e-5bbf-42f9-ac28-a9b051172fb2) |
 
-Progress tracking for group members.
+---
 
-🟩 3. Post Feed (Community Wall)
+## 🔮 Future Enhancements (Planned Features)
 
-Students/Tutors can post updates.
+### 🟦 1. Advanced Schedule System
+- Tasks, deadlines, reminders  
+- Calendar view  
+- Push notifications  
 
-Like & comment system.
+### 🟪 2. Group Study Feature
+- Create groups  
+- Group chat  
+- Group tasks  
+- Shared files  
+- Progress tracking  
 
-Filters for subjects and interests.
+### 🟩 3. Community Post Feed
+- User posts  
+- Like & comment system  
+- Filters by subjects/interests  
 
-🟧 4. Tutor Booking System
+### 🟧 4. Tutor Booking System
+- Book one-to-one tutoring sessions  
+- Tutor availability calendar  
 
-Students can book 1:1 tutoring sessions.
+### 🟫 5. Voice Messages in Chat
+- Audio clips upload  
+- Auto-play inside chat  
 
-Tutor availability calendar.
+### 🟩 6. File Sharing
+- Upload PDFs / Images  
+- Supabase storage integration  
 
-🟫 5. Voice Messages in Chat
+### 🟨 7. Dark Mode
+- Full dark theme support  
 
-Upload audio clips.
+### 🟥 8. Push Notifications (FCM)
+- Message alerts  
+- Appointment reminders  
 
-Auto-play inside chat.
+---
 
-🟩 6. File Sharing
+## 📦 How to Run the Project
 
-Upload PDFs / Images inside chat.
-
-Supabase storage integration.
-
-🟨 7. Dark Mode
-
-Full dark theme support.
-
-🟥 8. Push Notifications (FCM)
-
-New message alerts.
-
-Appointment reminders.
-
-📦 How to Run the Project
+```bash
+git clone https://github.com/Abom6r/IU-Community.git
 flutter pub get
 flutter run
-
-
-Make sure you have a valid Supabase project with:
-
-Project URL
-
-ANON key
-
-Properly set database schema
-
-RLS enabled with allowed policies
-
-🤝 Contributing
-
-Pull requests and feature suggestions are welcome.
